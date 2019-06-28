@@ -14,7 +14,8 @@ ARG LANG_COUNTRY=US
 # Setup useful environment variables
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
-    MYSQL_DRIVER_VERSION=5.1.47
+    MYSQL_DRIVER_VERSION=5.1.47 \
+    KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \
@@ -60,9 +61,8 @@ RUN export CONTAINER_USER=confluence                &&  \
       -C /tmp && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                &&  \
-    chown -R confluence:confluence ${CONF_INSTALL} && \
+    chown -R confluence:confluence ${CONF_INSTALL} ${KEYSTORE} && \
     # Adding letsencrypt-ca to truststore
-    export KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der && \
@@ -78,6 +78,8 @@ RUN export CONTAINER_USER=confluence                &&  \
     # Install atlassian ssl tool
     wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
+    # Prepere cert import directory                     \
+    mkdir ${CONF_HOME}/certs                          &&  \
     # Remove obsolete packages and cleanup
     apk del wget && \
     # Clean caches and tmps
