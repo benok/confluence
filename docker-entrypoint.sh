@@ -257,6 +257,17 @@ if [ -n "${CONFLUENCE_CROWD_SSO}" ]; then
   controlCrowdSSO ${CONFLUENCE_CROWD_SSO}
 fi
 
+# if there are any certificates that should be imported to the JVM Keystore,
+# import them.  Note that KEYSTORE is defined in the Dockerfile
+# (taken from https://github.com/teamatldocker/crowd/blob/master/imagescripts/docker-entrypoint.sh)
+if [ -d ${CONF_HOME}/certs ]; then
+  for c in ${CONF_HOME}/certs/* ; do
+    echo Found certificate $c, importing to JVM keystore
+    c_base=${c##*/} && c_base=${c_base%.*} # equivalent to "basename -s $c"
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias $c_base -file $c || :
+  done
+fi
+
 if [ "$1" = 'confluence' ]; then
   source /usr/bin/dockerwait
   exec ${CONF_INSTALL}/bin/start-confluence.sh -fg
