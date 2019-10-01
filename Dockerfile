@@ -15,7 +15,7 @@ ARG LANG_COUNTRY=US
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
     MYSQL_DRIVER_VERSION=5.1.47 \
-    KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts
+    KEYSTORE=$JAVA_HOME/lib/security/cacerts
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \
