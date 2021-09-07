@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:alpine-jre
+FROM adoptopenjdk/openjdk8:jre8u282-b08-alpine
 # this image already contains glibc
 
 ARG CONFLUENCE_VERSION=7.12.5
@@ -27,7 +27,7 @@ RUN export CONTAINER_USER=confluence                        && \
             -s /bin/bash                                       \
             -S $CONTAINER_USER                                 \
     # glibc and pub key already installed by parent image; we need to install latest bin and i18n \
-    && export GLIBC_VERSION=2.29-r0                            \
+    && export GLIBC_VERSION=2.31-r0                            \
     && export GLIBC_DOWNLOAD_URL=https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION \
     && export GLIBC_BIN=glibc-bin-$GLIBC_VERSION.apk           \
     && export GLIBC_I18N=glibc-i18n-$GLIBC_VERSION.apk         \
