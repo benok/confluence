@@ -42,6 +42,7 @@ RUN export CONTAINER_USER=confluence                        && \
         tar                                                    \
         bash                                                   \
         su-exec                                                \
+        sudo                                                   \
         tini                                                   \
         xmlstarlet                                             \
         msttcorefonts-installer                                \
@@ -98,6 +99,8 @@ RUN export CONTAINER_USER=confluence                        && \
     # Install atlassian ssl tool
     wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
+    # requited to override default gateway
+    echo "confluence ALL=(ALL) NOPASSWD: /sbin/route" >> /etc/sudoers && \
     # Prepere cert import directory
     mkdir ${CONF_HOME}/certs                        &&  \
     # Clean caches and tmps

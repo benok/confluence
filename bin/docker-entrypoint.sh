@@ -270,6 +270,20 @@ if [ -d ${CONF_HOME}/certs ]; then
   done
 fi
 
+if [ "${OVERRIDE_DEFAULT_GW}" != "" ]; then
+  CUR_GW=$(netstat -rn | grep '^0.0.0.0' | awk '{print $2}')
+  echo "current default gw: ${CUR_GW}"
+  if [ "${OVERRIDE_DEFAULT_GW}" == "${CUR_GW}" ]; then
+    echo "current default gw == ${OVERRIDE_DEFAULT_GW}"
+  else
+    echo "change default gateway to ${OVERRIDE_DEFAULT_GW}"
+    sudo route delete default
+    sudo route add default gw ${OVERRIDE_DEFAULT_GW}
+  fi
+  CUR_GW=$(netstat -rn | grep '^0.0.0.0' | awk '{print $2}')
+  echo "current default gw: ${CUR_GW}"
+fi
+
 if [ "$1" = 'confluence' ]; then
   source /usr/bin/dockerwait
   exec ${CONF_INSTALL}/bin/start-confluence.sh -fg
