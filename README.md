@@ -100,22 +100,6 @@ $ docker run --name postgres -d \
     postgres:11.13
 ~~~~
 
-> This is the official postgres image.
-
-Postgres Community Docker Image:
-
-~~~~
-$ docker network create confluencenet
-$ docker run --name postgres -d \
-    --network confluencenet \
-    -e 'DB_USER=confluencedb' \
-    -e 'DB_PASS=jellyfish' \
-    -e 'DB_NAME=confluencedb' \
-    sameersbn/postgresql:9.4-12
-~~~~
-
-> This is the sameersbn/postgresql docker container I tested.
-
 Now start the Confluence container and let it use the container. On first startup you have to configure your Confluence yourself and fill it with a test license.
 
 1. Choose `Production Installation` because we have a postgres!
@@ -153,22 +137,6 @@ $ docker run -d --name mysql \
     -e 'MYSQL_PASSWORD=jellyfish' \
     mysql:5.6
 ~~~~
-
-> This is the mysql docker container I tested.
-
-MySQL Community Docker Image:
-
-~~~~
-$ docker network create confluencenet
-$ docker run -d --name mysql \
-    --network confluencenet \
-    -e 'ON_CREATE_DB=confluencedb' \
-    -e 'MYSQL_USER=confluencedb' \
-    -e 'MYSQL_PASS=jellyfish' \
-    tutum/mysql:5.6
-~~~~
-
-> This is the tutum/mysql docker container I tested.
 
 Now start the Confluence container and let it use the container. On first startup you have to configure your Confluence yourself and fill it with a test license.
 
