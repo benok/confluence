@@ -97,7 +97,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_DB=confluencedb' \
     -e 'POSTGRES_USER=confluencedb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.4
+    postgres:11.13
 ~~~~
 
 > This is the official postgres image.
