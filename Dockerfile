@@ -1,7 +1,7 @@
 FROM adoptopenjdk/openjdk8:jre8u292-b10-alpine
 # this image already contains glibc
 
-ARG CONFLUENCE_VERSION=7.13.0
+ARG CONFLUENCE_VERSION=7.14.0
 
 # permissions
 ARG CONTAINER_UID=1000
