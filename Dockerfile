@@ -1,7 +1,7 @@
 FROM adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
 # this image already contains glibc
 
-ARG CONFLUENCE_VERSION=7.20.0
+ARG CONFLUENCE_VERSION=8.0.0
 
 # permissions
 ARG CONTAINER_UID=1000
